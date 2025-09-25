@@ -617,8 +617,7 @@
 
  <script>
     // API Base URL - adjust according to your server
-  const API_BASE_URL = 'https://exam-result-portal.vercel.app/api';
-
+    const API_BASE_URL = 'http://localhost:3000/api';
     
     // Disable right-click
     document.addEventListener('contextmenu', function(e) {
@@ -681,7 +680,7 @@
     }
     
     // Generate result function
-    async function generateResult() {
+    async function teResult() {
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const subject = document.getElementById('subject').value;
@@ -816,7 +815,7 @@
         const printBtn = document.getElementById('print-btn');
         
         // Add click event to generate button
-        generateBtn.addEventListener('click', generateResult);
+        generateBtn.addEventListener('click', teResult);
         
         // Add click event to print button
         printBtn.addEventListener('click', printResult);
@@ -839,7 +838,7 @@
         // Add enter key support for form submission
         document.addEventListener('keydown', function(e) {
             if(e.key === 'Enter') {
-                generateResult();
+                teResult();
             }
         });
     });
