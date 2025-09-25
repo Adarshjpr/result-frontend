@@ -615,9 +615,10 @@
         </div>
     </div>
 
- <script>
+<script>
     // API Base URL - adjust according to your server
-    const API_BASE_URL = 'http://localhost:3000/api';
+  const API_BASE_URL = 'https://exam-result-portal.vercel.app/api';
+
     
     // Disable right-click
     document.addEventListener('contextmenu', function(e) {
@@ -680,7 +681,7 @@
     }
     
     // Generate result function
-    async function teResult() {
+    async function generateResult() {
         const name = document.getElementById('name').value;
         const email = document.getElementById('email').value;
         const subject = document.getElementById('subject').value;
@@ -696,29 +697,12 @@
         // Reset UI
         errorAlert.style.display = 'none';
         
-        // Generate result function
-        function teResult() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const subject = document.getElementById('subject').value;
-            const errorAlert = document.getElementById('error-alert');
-            const resultPlaceholder =ment.getElementById('result-placeholder');
-            const resultContent = document.getElementById('result-content');
-            const resultContainer = document.getElementById('result-container');
-            const printBtn = document.getElementById('print-btn');
-            const generateBtn = document.getElementById('generate-btn');
-            const loader = document.getElementById('loader');
-            const studentInfo = document.getElementById('student-info');
-            
-            // Reset UI
-            errorAlert.style.display = 'none';
-            
-            // Basic validation
-            if(name === "" || email === "" || subject === "") {
-                errorAlert.textContent = "Please enter your name, email, and select a subject.";
-                errorAlert.style.display = 'block';
-                return;
-            }
+        // Basic validation
+        if(name === "" || email === "" || subject === "") {
+            errorAlert.textContent = "Please enter your name, email, and select a subject.";
+            errorAlert.style.display = 'block';
+            return;
+        }
 
         // Gmail-specific validation
         if(!email.endsWith("@gmail.com")) {
@@ -815,7 +799,7 @@
         const printBtn = document.getElementById('print-btn');
         
         // Add click event to generate button
-        generateBtn.addEventListener('click', teResult);
+        generateBtn.addEventListener('click', generateResult);
         
         // Add click event to print button
         printBtn.addEventListener('click', printResult);
@@ -838,7 +822,7 @@
         // Add enter key support for form submission
         document.addEventListener('keydown', function(e) {
             if(e.key === 'Enter') {
-                teResult();
+                generateResult();
             }
         });
     });
