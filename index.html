@@ -617,9 +617,11 @@
 
 <script>
     // API Base URL - adjust according to your server
-  const API_BASE_URL = 'https://exam-result-portal.vercel.app/api';
+// Frontend में ये changes करें
+const API_BASE_URL = 'https://your-backend-app.vercel.app/api';
 
-    
+
+
     // Disable right-click
     document.addEventListener('contextmenu', function(e) {
         e.preventDefault();
@@ -647,38 +649,43 @@
     });
     
     // Check if result exists in database
-    async function checkExistingResult(email, subject) {
-        try {
-            const response = await fetch(`${API_BASE_URL}/get-result?email=${encodeURIComponent(email)}&subject=${encodeURIComponent(subject)}`);
-            const data = await response.json();
-            
-            if (data.success && data.data) {
-                return data.data; // Return existing result
-            }
-            return null; // No existing result
-        } catch (error) {
-            console.error('Error checking existing result:', error);
-            return null;
+// Check existing result function update
+async function checkExistingResult(email, subject) {
+    try {
+        const response = await fetch(
+            `${API_BASE_URL}/get-result?email=${encodeURIComponent(email)}&subject=${encodeURIComponent(subject)}`
+        );
+        const data = await response.json();
+        
+        if (data.success && data.data) {
+            return data.data;
         }
+        return null;
+    } catch (error) {
+        console.error('Error checking result:', error);
+        return null;
     }
+}
+    
     
     // Save result to database
-    async function saveResultToDB(resultData) {
-        try {
-            const response = await fetch(`${API_BASE_URL}/save-result`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(resultData)
-            });
-            const data = await response.json();
-            return data.success;
-        } catch (error) {
-            console.error('Error saving result to database:', error);
-            return false;
-        }
+   // Save result function update
+async function saveResultToDB(resultData) {
+    try {
+        const response = await fetch(`${API_BASE_URL}/save-result`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(resultData)
+        });
+        const data = await response.json();
+        return data.success;
+    } catch (error) {
+        console.error('Error saving result:', error);
+        return false;
     }
+}
     
     // Generate result function
     async function generateResult() {
