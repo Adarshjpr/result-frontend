@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNCODEMY - Student Result Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #2ecc71;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --danger-color: #e74c3c;
+            --border-radius: 10px;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: var(--dark-color);
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            animation: fadeIn 0.8s ease-out;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #1a252f 100%);
+            color: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            text-align: center;
+            box-shadow: var(--box-shadow);
+            position: relative;
+            overflow: hidden;
+            transform: translateY(0);
+            transition: var(--transition);
+        }
+        
+        .header:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+        }
+        
+        .header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            animation: gradientShift 3s infinite alternate;
+        }
+        
+        .university-logo {
+            width: 100px;
+            height: 100px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 15px;
+            font-size: 3rem;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: pulse 2s infinite;
+        }
+        
+        .university-name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: 1px;
+            background: linear-gradient(90deg, #fff, var(--light-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .portal-title {
+            font-size: 1.4rem;
+            font-weight: 300;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+        
+        .content {
+            display: flex;
+            gap: 30px;
+        }
+        
+        @media (max-width: 900px) {
+            .content {
+                flex-direction: column;
+            }
+        }
+        
+        .form-section {
+            flex: 1;
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            transform: translateX(0);
+            transition: var(--transition);
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        .form-section:hover {
+            transform: translateX(5px);
+        }
+        
+        .result-section {
+            flex: 1;
+            background: white;
+            padding: 30px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            display: flex;
+            flex-direction: column;
+            transform: translateX(0);
+            transition: var(--transition);
+            animation: slideInRight 0.8s ease-out;
+        }
+        
+        .result-section:hover {
+            transform: translateX(-5px);
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--secondary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--accent-color);
+            transition: var(--transition);
+        }
+        
+        .section-title:hover::after {
+            width: 100%;
+        }
+        
+        .section-title i {
+            color: var(--secondary-color);
+            font-size: 1.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--primary-color);
+            transition: var(--transition);
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background: #f9f9f9;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+            background: white;
+            transform: translateY(-2px);
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #2980b9 100%);
+            color: white;
+            border: none;
+            padding: 16px 20px;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: 0.5s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .result-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: var(--border-radius);
+            border: 2px dashed #ddd;
+            transition: var(--transition);
+            min-height: 400px;
+        }
+        
+        .result-container.has-result {
+            border-color: var(--secondary-color);
+            background: #f0f8ff;
+        }
+        
+        .result-placeholder {
+            color: #6c757d;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+        
+        .result-placeholder i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #bdc3c7;
+            display: block;
+        }
+        
+        .result-content {
+            width: 100%;
+            display: none;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .student-info {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #34495e 100%);
+            color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .student-info::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: translateX(-100%);
+        }
+        
+        .student-info.animated::before {
+            animation: shimmer 2s infinite;
+        }
+        
+        .student-name {
+            font-size: 1.6rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .result-details {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .result-row {
+            display: flex;
+            border-bottom: 1px solid #eee;
+            transition: var(--transition);
+        }
+        
+        .result-row:hover {
+            background: #f9f9f9;
+            transform: translateX(5px);
+        }
+        
+        .result-row:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            flex: 1;
+            padding: 15px;
+            background: #f8f9fa;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .result-value {
+            flex: 2;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .status-pass {
+            color: var(--success-color);
+            font-weight: 700;
+        }
+        
+        .status-fail {
+            color: var(--danger-color);
+            font-weight: 700;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: var(--border-radius);
+        }
+        
+        .print-btn {
+            background: linear-gradient(135deg, var(--accent-color) 0%, #c0392b 100%);
+            color: white;
+            margin-top: 25px;
+            display: none;
+            width: auto;
+            padding: 12px 25px;
+        }
+        
+        .print-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .alert {
+            padding: 15px;
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            display: none;
+            animation: shake 0.5s;
+        }
+        
+        .alert-error {
+            background: #ffebee;
+            color: #c62828;
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        /* Loader styles */
+        .loader {
+            display: none;
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--secondary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        /* Animations */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from { 
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from { 
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* Disable text selection and right-click */
+        .disable-selection {
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        
+        /* Hide elements when printing */
+        @media print {
+            .form-section, .footer, .print-btn {
+                display: none !important;
+            }
+            
+            .result-section {
+                box-shadow: none;
+                width: 100%;
+                transform: none !important;
+            }
+            
+            body {
+                background: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="university-logo">
+                <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h1 class="university-name">UNCODEMY</h1>
+            <p class="portal-title">Student Result Generation Portal</p>
+        </div>
+        
+        <div class="content">
+            <div class="form-section">
+                <h2 class="section-title"><i class="fas fa-user-graduate"></i> Student Information</h2>
+                
+                <div class="alert alert-error" id="error-alert">
+                    <i class="fas fa-exclamation-circle"></i> Please enter a valid email and select a subject.
+                </div>
+                
+                <div class="form-group">
+                    <label for="name"><i class="fas fa-user"></i> Student Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name">
+                </div>
+                
+                <div class="form-group">
+                    <label for="email"><i class="fas fa-envelope"></i> Student Email</label>
+                    <input type="email" id="email" placeholder="Enter your university email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="subject"><i class="fas fa-book"></i> Select Subject</label>
+                    <select id="subject">
+                        <option value="">-- Choose a Subject --</option>
+                        <option value="MERN Full Stack Development">MERN Full Stack Development</option>
+                        <option value="Java Full Stack">Java Full Stack</option>
+                        <option value="Python Full Stack Development">Python Full Stack Development</option>
+                        <option value="Data Analytics">Data Analytics</option>
+                        <option value="Data Science">Data Science</option>
+                    </select>
+                </div>
+                
+                <button class="btn" id="generate-btn">
+                    <i class="fas fa-cogs"></i> Generate Result
+                </button>
+                
+                <div class="loader" id="loader"></div>
+            </div>
+            
+            <div class="result-section">
+                <h2 class="section-title"><i class="fas fa-file-alt"></i> Examination Result</h2>
+                
+                <div class="result-container" id="result-container">
+                    <div class="result-placeholder" id="result-placeholder">
+                        <i class="fas fa-file-invoice"></i>
+                        <p>Your result will appear here after submitting the form.</p>
+                    </div>
+                    
+                    <div class="result-content" id="result-content">
+                        <div class="student-info" id="student-info">
+                            <div class="student-name" id="student-name">John Doe</div>
+                            <div class="student-email" id="student-email">john.doe@uncodemy.com</div>
+                        </div>
+                        
+                        <div class="result-details">
+                            <div class="result-row">
+                                <div class="result-label">Subject</div>
+                                <div class="result-value" id="result-subject">MERN Full Stack Development</div>
+                            </div>
+                            <div class="result-row">
+                                <div class="result-label">Percentage</div>
+                                <div class="result-value" id="result-percentage">65%</div>
+                            </div>
+                            <div class="result-row">
+                                <div class="result-label">Grade</div>
+                                <div class="result-value" id="result-grade">C</div>
+                            </div>
+                            <div class="result-row">
+                                <div class="result-label">Status</div>
+                                <div class="result-value status-fail" id="result-status">Fail</div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn print-btn" id="print-btn">
+                            <i class="fas fa-print"></i> Print Result
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p>&copy; 2023 UNCODEMY. All rights reserved.</p>
+            <p>This is an official result generation system. Unauthorized access is prohibited.</p>
+        </div>
+    </div>
+
+ <script>
+    // API Base URL - adjust according to your server
+    const API_BASE_URL = 'http://localhost:3000/api';
+    
+    // Disable right-click
+    document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+    });
+    
+    // Disable developer tools shortcuts
+    document.addEventListener('keydown', function(e) {
+        if(e.keyCode === 123) { // F12
+            e.preventDefault();
+            return false;
+        }
+        if(e.ctrlKey && e.shiftKey && e.keyCode === 73) { // Ctrl+Shift+I
+            e.preventDefault();
+            return false;
+        }
+        if(e.ctrlKey && e.shiftKey && e.keyCode === 74) { // Ctrl+Shift+J
+            e.preventDefault();
+            return false;
+        }
+        if(e.ctrlKey && e.keyCode === 85) { // Ctrl+U
+            e.preventDefault();
+            return false;
+        }
+    });
+    
+    // Check if result exists in database
+    async function checkExistingResult(email, subject) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/get-result?email=${encodeURIComponent(email)}&subject=${encodeURIComponent(subject)}`);
+            const data = await response.json();
+            
+            if (data.success && data.data) {
+                return data.data; // Return existing result
+            }
+            return null; // No existing result
+        } catch (error) {
+            console.error('Error checking existing result:', error);
+            return null;
+        }
+    }
+    
+    // Save result to database
+    async function saveResultToDB(resultData) {
+        try {
+            const response = await fetch(`${API_BASE_URL}/save-result`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(resultData)
+            });
+            const data = await response.json();
+            return data.success;
+        } catch (error) {
+            console.error('Error saving result to database:', error);
+            return false;
+        }
+    }
+    
+    // Generate result function
+    async function generateResult() {
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const subject = document.getElementById('subject').value;
+        const errorAlert = document.getElementById('error-alert');
+        const resultPlaceholder = document.getElementById('result-placeholder');
+        const resultContent = document.getElementById('result-content');
+        const resultContainer = document.getElementById('result-container');
+        const printBtn = document.getElementById('print-btn');
+        const generateBtn = document.getElementById('generate-btn');
+        const loader = document.getElementById('loader');
+        const studentInfo = document.getElementById('student-info');
+        
+        // Reset UI
+        errorAlert.style.display = 'none';
+        
+        // Generate result function
+        function teResult() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const errorAlert = document.getElementById('error-alert');
+            const resultPlaceholder =ment.getElementById('result-placeholder');
+            const resultContent = document.getElementById('result-content');
+            const resultContainer = document.getElementById('result-container');
+            const printBtn = document.getElementById('print-btn');
+            const generateBtn = document.getElementById('generate-btn');
+            const loader = document.getElementById('loader');
+            const studentInfo = document.getElementById('student-info');
+            
+            // Reset UI
+            errorAlert.style.display = 'none';
+            
+            // Basic validation
+            if(name === "" || email === "" || subject === "") {
+                errorAlert.textContent = "Please enter your name, email, and select a subject.";
+                errorAlert.style.display = 'block';
+                return;
+            }
+
+        // Gmail-specific validation
+        if(!email.endsWith("@gmail.com")) {
+            errorAlert.textContent = "Email must end with @gmail.com";
+            errorAlert.style.display = 'block';
+            return;
+        }
+
+        // Show loader and disable button
+        generateBtn.disabled = true;
+        loader.style.display = 'block';
+        resultPlaceholder.style.display = 'none';
+        resultContent.style.display = 'none';
+        printBtn.style.display = 'none';
+        resultContainer.classList.remove('has-result');
+        
+        try {
+            // First check if result already exists in database
+            const existingResult = await checkExistingResult(email, subject);
+            
+            let percentage, grade, status;
+            
+            if (existingResult) {
+                // Use existing result from database
+                percentage = existingResult.percentage;
+                grade = existingResult.grade;
+                status = existingResult.status;
+            } else {
+                // Generate new random result
+                percentage = Math.floor(Math.random() * (69 - 50 + 1)) + 50;
+                
+                // Determine grade based on percentage
+                if (percentage >= 85) grade = "A+";
+                else if (percentage >= 75) grade = "A";
+                else if (percentage >= 65) grade = "B";
+                else if (percentage >= 55) grade = "C";
+                else if (percentage >= 50) grade = "D";
+                else grade = "F";
+                
+                // Status always fail
+                status = "Fail";
+                
+                // Save new result to database
+                const resultData = {
+                    name: name,
+                    email: email,
+                    subject: subject,
+                    percentage: percentage,
+                    grade: grade,
+                    status: status
+                };
+                
+                await saveResultToDB(resultData);
+            }
+            
+            // Update UI with result
+            document.getElementById('student-name').textContent = name;
+            document.getElementById('student-email').textContent = email;
+            document.getElementById('result-subject').textContent = subject;
+            document.getElementById('result-percentage').textContent = `${percentage}%`;
+            document.getElementById('result-grade').textContent = grade;
+            document.getElementById('result-status').textContent = status;
+            
+            // Show result and hide placeholder
+            resultPlaceholder.style.display = 'none';
+            resultContent.style.display = 'block';
+            printBtn.style.display = 'flex';
+            resultContainer.classList.add('has-result');
+            
+            // Add animation class to student info
+            studentInfo.classList.add('animated');
+            
+        } catch (error) {
+            console.error('Error generating result:', error);
+            errorAlert.textContent = "An error occurred while generating the result. Please try again.";
+            errorAlert.style.display = 'block';
+        } finally {
+            // Hide loader and enable button
+            loader.style.display = 'none';
+            generateBtn.disabled = false;
+        }
+    }
+    
+    function printResult() {
+        window.print();
+    }
+    
+    // Add event listeners when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        const nameInput = document.getElementById('name');
+        const emailInput = document.getElementById('email');
+        const subjectSelect = document.getElementById('subject');
+        const generateBtn = document.getElementById('generate-btn');
+        const printBtn = document.getElementById('print-btn');
+        
+        // Add click event to generate button
+        generateBtn.addEventListener('click', generateResult);
+        
+        // Add click event to print button
+        printBtn.addEventListener('click', printResult);
+        
+        // Add focus/blur effects to form inputs
+        const inputs = [nameInput, emailInput, subjectSelect];
+        
+        inputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.style.borderColor = '#3498db';
+                this.parentElement.querySelector('label').style.color = '#3498db';
+            });
+            
+            input.addEventListener('blur', function() {
+                this.style.borderColor = '#e0e0e0';
+                this.parentElement.querySelector('label').style.color = '#2c3e50';
+            });
+        });
+        
+        // Add enter key support for form submission
+        document.addEventListener('keydown', function(e) {
+            if(e.key === 'Enter') {
+                generateResult();
+            }
+        });
+    });
+</script>
+</body>
+</html>
